@@ -45,6 +45,10 @@ struct RootView: View {
         AuthView(isUserLogIn: $isUserLogIn)
           .environmentObject(signUpViewModel)
           .environmentObject(signInViewModel)
+          .onDisappear{
+            newsViewModel.news.removeAll()
+            newsViewModel.q = ""
+          }
       }
     })
   }

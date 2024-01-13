@@ -65,6 +65,13 @@ final class SignUpViewModel: ObservableObject {
     }
   }
 
+  func setAuthVariablesToEmpty() {
+    self.email = ""
+    self.password = ""
+    self.passwordIsCorrect = ""
+    self.userName = ""
+  }
+
   private var checkPassword: Bool {
     return password == passwordIsCorrect
   }

@@ -58,6 +58,10 @@ final class SignInViewModel: ObservableObject, SignInViewModelProtocol {
       showAlert = true
       throw URLError(.badServerResponse)
     }
+  }
 
+  func setAuthVariablesToEmpty() {
+    self.email = ""
+    self.password = ""
   }
 }

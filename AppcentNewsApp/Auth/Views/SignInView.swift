@@ -61,6 +61,9 @@ struct SignInView: View {
     .alert(isPresented: $signInViewModel.showAlert) {
       Alert(title: Text("Error"), message: Text(signInViewModel.alertMessage), dismissButton: .default(Text("OK")))
     }
+    .onDisappear {
+      signInViewModel.setAuthVariablesToEmpty()
+    }
   }
 }
 
