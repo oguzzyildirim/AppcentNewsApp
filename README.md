@@ -20,8 +20,7 @@ If you come across the 'You have made too many requests recently. Developer acco
 - OOP
 
 ### Design Patterns
-- Singleton
-- Observer
+- Dependency Injection
 
 ### Libraries
 - Alamofire
