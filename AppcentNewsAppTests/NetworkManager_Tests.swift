@@ -38,11 +38,12 @@ final class NetworkManager_Tests: XCTestCase {
     let expectation = XCTestExpectation(description: "API Request Expectation")
 
     // When
-    networkManager.request(Router.search(q: "besiktas", page: "1", apiKey: "90801f6001934745b7c544c54962e89d", pageSize: "6"), decodeToType: NewModel.self) { result in
+    networkManager.request(Router.search(q: "besiktas", page: "1", apiKey: "90801f6001934745b7c544c54962e89d", pageSize: "6"), decodeToType: NewsModel.self) { result in
       switch result {
       case .success(let decodedObject):
         // Then
-        XCTAssertNotNil(decodedObject)
+        guard let articles = decodedObject.articles else { return }
+        XCTAssertNotNil(articles)
         expectation.fulfill()
 
       case .failure(let error):
@@ -59,11 +60,12 @@ final class NetworkManager_Tests: XCTestCase {
     let invalidApiKey = UUID().uuidString
 
     // When
-    networkManager.request(Router.search(q: "besiktas", page: "1", apiKey: "\(invalidApiKey)", pageSize: "6"), decodeToType: NewModel.self) { result in
+    networkManager.request(Router.search(q: "besiktas", page: "1", apiKey: "\(invalidApiKey)", pageSize: "6"), decodeToType: NewsModel.self) { result in
       switch result {
       case .success(let decodedObject):
         // Then
-        XCTAssertNil(decodedObject)
+        guard let articles = decodedObject.articles else { return }
+        XCTAssertNil(articles)
 
       case .failure(let error):
         XCTAssertNotNil(error)

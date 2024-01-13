@@ -12,22 +12,22 @@ import SwiftData
 import WebKit
 
 struct NewsDetailView: View {
-  var new: Article
+  var news: Article
   @EnvironmentObject var newsViewModel: NewsViewModel
   @EnvironmentObject var favoritesViewModel: FavoritesViewModel
 
-  init(newItem: Article) {
-    new = newItem
+  init(newsItem: Article) {
+    news = newsItem
   }
   var body: some View {
     ZStack{
       ScrollView {
         VStack(alignment: .center, spacing: 30){
-          loadImage(new: new)
+          loadImage(news: news)
             .clipShape(RoundedRectangle(cornerRadius: 10))
 
           VStack(alignment: .leading){
-            Text(new._newDescription)
+            Text(news._newsDescription)
               .font(.headline)
               .fontWeight(.bold)
               .foregroundStyle(Color.theme.accentColor)
@@ -36,7 +36,7 @@ struct NewsDetailView: View {
               Image(systemName: "book.pages")
                 .resizable()
                 .frame(width: 30, height: 30)
-              Text(new._author)
+              Text(news._author)
                 .font(.subheadline)
                 .fontWeight(.semibold)
                 .foregroundStyle(Color.theme.accentColor)
@@ -44,7 +44,7 @@ struct NewsDetailView: View {
               Image(systemName: "calendar")
                 .resizable()
                 .frame(width: 30, height: 30)
-              Text(DateFormatter.convertDateStringToDate(new._publishedAt))
+              Text(DateFormatter.convertDateStringToDate(news._publishedAt))
                 .font(.subheadline)
                 .fontWeight(.semibold)
                 .foregroundStyle(Color.theme.accentColor)
@@ -54,7 +54,7 @@ struct NewsDetailView: View {
           }
           .padding(.horizontal, 5)
 
-          Text(new._content.removeAfterCharacter("["))
+          Text(news._content.removeAfterCharacter("["))
             .font(.callout)
             .foregroundStyle(Color.theme.accentColor)
 
@@ -67,7 +67,7 @@ struct NewsDetailView: View {
           Spacer()
 
           NavigationLink {
-            WebView(url: new._url)
+            WebView(url: news._url)
               .navigationTitle("New Source")
               .navigationBarTitleDisplayMode(.inline)
           } label: {
@@ -85,8 +85,8 @@ struct NewsDetailView: View {
     .toolbar{
       ToolbarItem(placement: .topBarTrailing) {
         HStack{
-          if new._url != "Url not found" {
-            let url = URL(string: new._url)!
+          if news._url != "Url not found" {
+            let url = URL(string: news._url)!
             ShareLink(item: url, subject: Text("Check out this link"), message: Text("If you want to learn Swift, take a look at this website.")) {
               Image(systemName: "square.and.arrow.up")
                 .resizable()
@@ -101,11 +101,11 @@ struct NewsDetailView: View {
             Task {
               do {
                 try await favoritesViewModel.loadFavorites()
-                let favorite = DBFavorite(favorite: new)
+                let favorite = DBFavorite(favorite: news)
                 if !favoritesViewModel.doesFavoriteExist(favoriteIsExist: favorite){
                   try await favoritesViewModel.userManager.createNewFavorite(favorite: favorite)
                 } else {
-                  try await favoritesViewModel.deleteFavoriteFromFirestore(favorite: new)
+                  try await favoritesViewModel.deleteFavoriteFromFirestore(favorite: news)
                 }
               } catch {
                 throw URLError(.badServerResponse)
@@ -135,9 +135,9 @@ struct NewsDetailView: View {
 
 extension NewsDetailView {
   @ViewBuilder
-  private func loadImage(new: Article) -> some View {
-    if new._urlToImage != "Image url not found" {
-      if let url = URL(string: new._urlToImage){
+  private func loadImage(news: Article) -> some View {
+    if news._urlToImage != "Image url not found" {
+      if let url = URL(string: news._urlToImage){
         KFImage(url)
           .resizable()
           .scaledToFill()
@@ -169,8 +169,8 @@ extension NewsDetailView {
 
 #Preview {
   NavigationStack{
-    NewsDetailView(newItem: Article(source: Source(id: "1", name: "Sözcü"), author: "ben", title: "Sample titlejkasdaskdhasdkasd", newDescription: "Petits dépoussiérages de fin d'année. Manifestement insatisfaits du début de saison de leur équipe.", url: "https://www.sofoot.com/breves/besiktas-se-separe-deric-bailly", urlToImage: "https://sofoot.s3.eu-central-1.amazonaws.com/wp-content/uploads/2023/12/29190602/6351534-hd-1400x1050.jpg", publishedAt: "2023-12-29T18:20:05Z", content: "Petits dépoussiérages de fin d'année. Manifestement insatisfaits du début de saison de leur équipe, malgré une cinquième place en championnat et un objectif européen toujours envisageable, les dirige jdksfkslf ajksdhaskl dkajsdhksad kjashdjkasdh kjashdkjashd kjashdjkash kjashdkjsahd kjashdkjashdkj kajsdhkjsahdkjsahdkjsahdjksah"))
-      .environmentObject(NewsViewModel(service: NewService(networkManager: NetworkManager(reachabilityManager: NetworkReachabilityManager()!))))
+    NewsDetailView(newsItem: Article(source: Source(id: "1", name: "Sözcü"), author: "ben", title: "Sample titlejkasdaskdhasdkasd", newsDescription: "Petits dépoussiérages de fin d'année. Manifestement insatisfaits du début de saison de leur équipe.", url: "https://www.sofoot.com/breves/besiktas-se-separe-deric-bailly", urlToImage: "https://sofoot.s3.eu-central-1.amazonaws.com/wp-content/uploads/2023/12/29190602/6351534-hd-1400x1050.jpg", publishedAt: "2023-12-29T18:20:05Z", content: "Petits dépoussiérages de fin d'année. Manifestement insatisfaits du début de saison de leur équipe, malgré une cinquième place en championnat et un objectif européen toujours envisageable, les dirige jdksfkslf ajksdhaskl dkajsdhksad kjashdjkasdh kjashdkjashd kjashdjkash kjashdkjsahd kjashdkjashdkj kajsdhkjsahdkjsahdkjsahdjksah"))
+      .environmentObject(NewsViewModel(service: NewsService(networkManager: NetworkManager(reachabilityManager: NetworkReachabilityManager()!))))
       .environmentObject(FavoritesViewModel(userManager: UserManager(authManager: AuthManager())))
   }
 }

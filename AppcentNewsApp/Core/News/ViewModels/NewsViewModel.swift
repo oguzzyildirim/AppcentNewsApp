@@ -10,7 +10,7 @@ import SwiftUI
 
 @MainActor
 final class NewsViewModel: ObservableObject {
-  typealias SearchedNewsResult = Result<NewModel, Error>
+  typealias SearchedNewsResult = Result<NewsModel, Error>
   @Published var newsResult: SearchedNewsResult?
   @Published var news: [Article] = []
   @Published var showAlert: Bool = false
@@ -20,9 +20,9 @@ final class NewsViewModel: ObservableObject {
   @Published var page: Int
   @Published var totalPages: Int
 
-  private var service: NewServiceProtocol
+  private var service: NewsServiceProtocol
 
-  init(service: NewServiceProtocol) {
+  init(service: NewsServiceProtocol) {
     self.service = service
     page = 1
     totalPages = 2
@@ -46,19 +46,19 @@ final class NewsViewModel: ObservableObject {
 
         if let news = self.newsResult {
           switch news {
-          case .success(let new):
-            if let status = new.status {
+          case .success(let news):
+            if let status = news.status {
               if status == "error" {
                 alertMessage = "You have made too many requests recently. Developer accounts are limited to 100 requests over a 24 hour period (50 requests available every 12 hours)."
                 showAlert = true
               }
-              else if new._totalResults == 0 {
+              else if news._totalResults == 0 {
                 alertMessage = "No news sources matching your searched word found."
                 showAlert = true
               } else {
-                self.totalPages = new._totalResults
+                self.totalPages = news._totalResults
                 self.page += 1
-                self.news.append(contentsOf: new._articles)
+                self.news.append(contentsOf: news._articles)
               }
             }
           case .failure(let failure):

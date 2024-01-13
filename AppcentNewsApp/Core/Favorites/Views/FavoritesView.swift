@@ -18,10 +18,10 @@ struct FavoritesView: View {
       List{
         ForEach(favoritesViewModel.favorites) { favorite in
           NavigationLink {
-            NewsDetailView(newItem: favorite.favorite)
+            NewsDetailView(newsItem: favorite.favorite)
               .environmentObject(favoritesViewModel)
           } label: {
-            NewsRowView(new: favorite.favorite)
+            NewsRowView(news: favorite.favorite)
           }
         }
         .onDelete(perform: { indexSet in

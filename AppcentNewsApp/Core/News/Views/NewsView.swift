@@ -34,11 +34,11 @@ struct NewsView: View {
         List {
           ForEach(0..<newsViewModel.news.count, id: \.self) { index in
             NavigationLink {
-              NewsDetailView(newItem: newsViewModel.news[index])
+              NewsDetailView(newsItem: newsViewModel.news[index])
                 .environmentObject(newsViewModel)
                 .environmentObject(favoritesViewModel)
             } label: {
-              NewsRowView(new: newsViewModel.news[index])
+              NewsRowView(news: newsViewModel.news[index])
                 .onAppear {
                   if index + 1 == newsViewModel.news.count {
                     newsViewModel.loadMoreContent()
@@ -63,7 +63,7 @@ struct NewsView: View {
 #Preview {
   NavigationStack{
     NewsView()
-      .environmentObject(NewsViewModel(service: NewService(networkManager: NetworkManager(reachabilityManager: NetworkReachabilityManager()!))))
+      .environmentObject(NewsViewModel(service: NewsService(networkManager: NetworkManager(reachabilityManager: NetworkReachabilityManager()!))))
       .environmentObject(FavoritesViewModel(userManager: UserManager(authManager: AuthManager())))
   }
 }

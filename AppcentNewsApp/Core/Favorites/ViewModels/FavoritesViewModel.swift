@@ -19,8 +19,8 @@ final class FavoritesViewModel: ObservableObject {
     self.userManager = userManager
   }
 
-  func createNewFavorite(new: Article, isFavorite: Bool) async throws {
-    let dbfavorite = DBFavorite(favorite: new)
+  func createNewsFavorite(news: Article, isFavorite: Bool) async throws {
+    let dbfavorite = DBFavorite(favorite: news)
     try await userManager.createNewFavorite(favorite: dbfavorite)
   }
 

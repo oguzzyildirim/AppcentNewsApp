@@ -14,27 +14,27 @@ final class FavoritesViewModel_Tests: XCTestCase {
   var favoritesViewModel: FavoritesViewModel!
   var authManager: AuthManager!
   var userManager: UserManager!
+  var news: Article!
 
   override func setUpWithError() throws {
     super.setUp()
     authManager = AuthManager()
     userManager = UserManager(authManager: authManager)
     favoritesViewModel = FavoritesViewModel(userManager: userManager)
+    news = Article(source: Source(id: "1", name: "test_source"), author: "test_author", title: "test_title", newsDescription: "test_desc", url: "test_url", urlToImage: "test_urlToImage", publishedAt: "test_date", content: "test_content")
   }
 
   override func tearDownWithError() throws {
     userManager = nil
     authManager = nil
     favoritesViewModel = nil
-
+    news = nil
     super.tearDown()
   }
 
   func test_FavoritesViewModel_doesFavoriteExist_shouldBeFalse() {
     // Given
-
-    let new = Article(source: Source(id: "1", name: "test_source"), author: "test_author", title: "test_title", newDescription: "test_desc", url: "test_url", urlToImage: "test_urlToImage", publishedAt: "test_date", content: "test_content")
-    let favoriteIsExist = DBFavorite(favorite: new)
+    let favoriteIsExist = DBFavorite(favorite: news)
     favoritesViewModel.favorites = []
 
     // When
@@ -47,9 +47,7 @@ final class FavoritesViewModel_Tests: XCTestCase {
 
   func test_FavoritesViewModel_doesFavoriteExist_shouldBeTrue() {
     // Given
-
-    let new = Article(source: Source(id: "1", name: "test_source"), author: "test_author", title: "test_title", newDescription: "test_desc", url: "test_url", urlToImage: "test_urlToImage", publishedAt: "test_date", content: "test_content")
-    let favoriteIsExist = DBFavorite(favorite: new)
+    let favoriteIsExist = DBFavorite(favorite: news)
     favoritesViewModel.favorites.append(favoriteIsExist) // Boş favoriler listesi
 
     // When
@@ -61,9 +59,7 @@ final class FavoritesViewModel_Tests: XCTestCase {
 
   func test_FavoritesViewModel_alertMessage_shouldBeAdded() {
     // Given
-
-    let new = Article(source: Source(id: "1", name: "test_source"), author: "test_author", title: "test_title", newDescription: "test_desc", url: "test_url", urlToImage: "test_urlToImage", publishedAt: "test_date", content: "test_content")
-    let favoriteIsExist = DBFavorite(favorite: new)
+    let favoriteIsExist = DBFavorite(favorite: news)
     favoritesViewModel.favorites = [] // Boş favoriler listesi
 
     // When
@@ -75,9 +71,7 @@ final class FavoritesViewModel_Tests: XCTestCase {
 
   func test_FavoritesViewModel_alertMessage_shouldBeRemoved() {
     // Given
-
-    let new = Article(source: Source(id: "1", name: "test_source"), author: "test_author", title: "test_title", newDescription: "test_desc", url: "test_url", urlToImage: "test_urlToImage", publishedAt: "test_date", content: "test_content")
-    let favoriteIsExist = DBFavorite(favorite: new)
+    let favoriteIsExist = DBFavorite(favorite: news)
     favoritesViewModel.favorites.append(favoriteIsExist)
 
     // When
@@ -89,9 +83,7 @@ final class FavoritesViewModel_Tests: XCTestCase {
 
   func test_FavoritesViewModel_showAlert_shouldBeTrue() {
     // Given
-
-    let new = Article(source: Source(id: "1", name: "test_source"), author: "test_author", title: "test_title", newDescription: "test_desc", url: "test_url", urlToImage: "test_urlToImage", publishedAt: "test_date", content: "test_content")
-    let favoriteIsExist = DBFavorite(favorite: new)
+    let favoriteIsExist = DBFavorite(favorite: news)
     favoritesViewModel.favorites.append(favoriteIsExist)
 
     // When
@@ -103,9 +95,7 @@ final class FavoritesViewModel_Tests: XCTestCase {
 
   func test_FavoritesViewModel_doesExist_shouldBeTrue() {
     // Given
-
-    let new = Article(source: Source(id: "1", name: "test_source"), author: "test_author", title: "test_title", newDescription: "test_desc", url: "test_url", urlToImage: "test_urlToImage", publishedAt: "test_date", content: "test_content")
-    let favoriteIsExist = DBFavorite(favorite: new)
+    let favoriteIsExist = DBFavorite(favorite: news)
     favoritesViewModel.favorites.append(favoriteIsExist)
 
     // When

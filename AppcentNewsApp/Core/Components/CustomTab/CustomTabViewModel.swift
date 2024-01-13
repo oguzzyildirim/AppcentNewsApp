@@ -8,10 +8,10 @@
 import Foundation
 
 final class CustomTabViewModel: ObservableObject {
-  private var newService: NewServiceProtocol
+  private var newsService: NewsServiceProtocol
 
-  init(newService: NewServiceProtocol) {
-    self.newService = newService
+  init(newsService: NewsServiceProtocol) {
+    self.newsService = newsService
   }
   @Published var selectedTab: CustomTabEnum.Tab = .house
 }

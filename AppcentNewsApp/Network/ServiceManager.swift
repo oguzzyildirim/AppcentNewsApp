@@ -7,11 +7,11 @@
 
 import Foundation
 
-protocol NewServiceProtocol {
+protocol NewsServiceProtocol {
   func fetchSearch(q: String, page: String, apiKey: String, pageSize: String, completionHandler: @escaping (NewsViewModel.SearchedNewsResult) -> ())
 }
 
-final class NewService: NewServiceProtocol {
+final class NewsService: NewsServiceProtocol {
   //MARK: Dependency Injection
   let networkManager: NetworkManager
 
@@ -21,7 +21,7 @@ final class NewService: NewServiceProtocol {
 
   func fetchSearch(q: String, page: String, apiKey: String, pageSize: String, completionHandler: @escaping (NewsViewModel.SearchedNewsResult) -> ()) {
     DispatchQueue.global().async {
-      self.networkManager.request(Router.search(q: q, page: page, apiKey: apiKey, pageSize: pageSize), decodeToType: NewModel.self) { result in
+      self.networkManager.request(Router.search(q: q, page: page, apiKey: apiKey, pageSize: pageSize), decodeToType: NewsModel.self) { result in
         // Main thread
         DispatchQueue.main.async {
           completionHandler(result)

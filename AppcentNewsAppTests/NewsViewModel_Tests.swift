@@ -13,14 +13,14 @@ import Alamofire
 final class NewsViewModel_Tests: XCTestCase {
   var reachabilityManager: NetworkReachabilityManager!
   var networkManager: NetworkManager!
-  var serviceManager: NewService!
+  var serviceManager: NewsService!
   var newsViewModel: NewsViewModel!
 
   override func setUpWithError() throws {
     super.setUp()
     reachabilityManager = NetworkReachabilityManager()
     networkManager = NetworkManager(reachabilityManager: reachabilityManager)
-    newsViewModel = NewsViewModel(service: NewService(networkManager: networkManager))
+    newsViewModel = NewsViewModel(service: NewsService(networkManager: networkManager))
   }
 
   override func tearDownWithError() throws {

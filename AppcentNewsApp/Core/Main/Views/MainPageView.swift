@@ -47,8 +47,8 @@ struct MainPageView: View {
 
 #Preview {
   MainPageView(isUserLogOut: .constant(false))
-    .environmentObject(CustomTabViewModel(newService: NewService(networkManager: NetworkManager(reachabilityManager: NetworkReachabilityManager()!))))
-    .environmentObject(NewsViewModel(service: NewService(networkManager: NetworkManager(reachabilityManager: NetworkReachabilityManager()!))))
+    .environmentObject(CustomTabViewModel(newsService: NewsService(networkManager: NetworkManager(reachabilityManager: NetworkReachabilityManager()!))))
+    .environmentObject(NewsViewModel(service: NewsService(networkManager: NetworkManager(reachabilityManager: NetworkReachabilityManager()!))))
     .environmentObject(SettingsViewModel(authManager: AuthManager()))
     .environmentObject(FavoritesViewModel(userManager: UserManager(authManager: AuthManager())))
 }

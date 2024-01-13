@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - NewModel
-struct NewModel: Codable, Identifiable {
+struct NewsModel: Codable, Identifiable {
   var id: String {return UUID().uuidString }
   let status: String?
   let totalResults: Int?
@@ -28,7 +28,7 @@ struct Article: Codable, Identifiable {
   var id: String {return UUID().uuidString }
   let source: Source?
   let author: String?
-  let title, newDescription: String?
+  let title, newsDescription: String?
   let url: String?
   let urlToImage: String?
   let publishedAt: String?
@@ -38,7 +38,7 @@ struct Article: Codable, Identifiable {
     case source = "source"
     case author = "author"
     case title = "title"
-    case newDescription = "description"
+    case newsDescription = "description"
     case url = "url"
     case urlToImage = "urlToImage"
     case publishedAt = "publishedAt"
@@ -56,8 +56,8 @@ struct Article: Codable, Identifiable {
   var _title: String {
     title ?? "Title not found"
   }
-  var _newDescription: String {
-    newDescription ?? "Description not found"
+  var _newsDescription: String {
+    newsDescription ?? "Description not found"
   }
 
   var _url: String {
@@ -88,7 +88,7 @@ extension Article {
       "source": _source,
       "author": _author,
       "title": _title,
-      "description": _newDescription,
+      "description": _newsDescription,
       "url": _url,
       "urlToImage": _urlToImage,
       "publishedAt": _publishedAt,
