@@ -12,7 +12,7 @@ If you come across the 'You have made too many requests recently. Developer acco
 
 ### Technologies
 - SwiftUI
-- Combine
+- UIKit just for WebView
 - Firebase Authentication
 - Firestore
 
