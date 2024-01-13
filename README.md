@@ -49,8 +49,7 @@ If you come across the 'You have made too many requests recently. Developer acco
 ![GMP_U2F2ZUdIMDE=](https://github.com/oguzzyildirim/AppcentNewsApp/assets/56165405/66a9de19-97b8-4c1a-92de-8ddeb71f0b0f)
 
 ### Overview
-![Video](https://github.com/oguzzyildirim/AppcentNewsApp/assets/56165405/c5e335fc-8315-4cb7-a583-9adc30673c19)
-
+![Video](https://github.com/oguzzyildirim/AppcentNewsApp/assets/56165405/a377b2f4-f5e0-4dde-b7d1-2b8f5ee6fa5d)
 
 ## License Information
 This project is licensed under the [MIT License](LICENSE).
